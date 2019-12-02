@@ -1,0 +1,17 @@
+<%= form_with scope: :session, url: login_path do |f| %>
+  <%= flash[:alert] %>
+
+  <p>
+    <%= f.label :account_id, 'アカウントID' %>
+    <%= f.text_field :account_id, required: true %>
+  </p>
+
+  <p>
+    <%= f.label :password, 'パスワード' %>
+    <%= f.password_field :password, required: true %>
+  </p>
+
+  <p><%= f.submit 'ログイン' %></p>
+<% end %>
+
+<p><%= link_to 'サインアップはこちら', signup_path %></p>
