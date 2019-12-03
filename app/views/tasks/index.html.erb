@@ -1,4 +1,4 @@
-<p>Welcome <%= current_user.name %>!!</p>
+<p><%= @user.name %></p>
 
 <% if @user == current_user %>
   <%= form_with model: Task.new, local: true do |f| %>
