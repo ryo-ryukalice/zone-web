@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :set_user
 
   def index
-    @tasks = Task.where(user: @user, created_at: Time.zone.today.all_day)
+    @tasks = @user.tasks.where(created_at: Time.zone.today.all_day)
   end
 
   def create
@@ -24,7 +24,7 @@ class TasksController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by(id: params[:user_id]) || current_user
+    @user = (params[:user_id].present? ? User.find(params[:user_id]) : current_user)
   end
 
   def task_params
