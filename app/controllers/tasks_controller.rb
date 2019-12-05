@@ -1,4 +1,4 @@
-class TasksController < ApplicationController
+class TasksController < ApplicationController 
   before_action :login_required
   before_action :set_user
 

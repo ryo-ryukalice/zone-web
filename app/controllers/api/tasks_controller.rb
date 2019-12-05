@@ -1,4 +1,6 @@
 class Api::TasksController < ApplicationController
+  skip_forgery_protection
+
   before_action :authenticate_by_token
 
   def index
@@ -6,10 +8,23 @@ class Api::TasksController < ApplicationController
     render json: @tasks.map { |task| { name: task.name, finished: task.finished } } 
   end
 
+  def create
+    @task = Task.create(task_params.merge(user: @user))
+  end
+
+  def update
+    task = Task.find(params[:id])
+    (task.user == @user) ? task.update(task_params) : render(status: :unauthorized)
+  end
+
   private
 
   def authenticate_by_token
     @user = User.find_by(api_token: params[:api_token])
     render status: :unauthorized, json: 'Invalid API token' if @user.blank?
+  end
+
+  def task_params
+    params.require(:task).permit(:name, :finished)
   end
 end
