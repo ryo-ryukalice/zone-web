@@ -8,13 +8,12 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params.merge(user: current_user))
-    redirect_to tasks_path
+    redirect_to Rails.application.routes.recognize_path(request.referer)
   end
 
   def update
     task = Task.find(params[:id])
-    redirect_to login_path if task.user != current_user
-    task.update(task_params)
+    (task.user == current_user) ? task.update(task_params) : redirect_to(login_path)
   end
 
   private
