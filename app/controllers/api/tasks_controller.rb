@@ -9,7 +9,8 @@ class Api::TasksController < ApplicationController
   end
 
   def create
-    @task = Task.create(task_params.merge(user: @user))
+    task = Task.create(task_params.merge(user: @user))
+    render json: { id: task.id, name: task.name, finished: task.finished }, status: :created
   end
 
   def update
