@@ -5,7 +5,7 @@ class Api::TasksController < ApplicationController
 
   def index
     @tasks = @user.tasks.where(created_at: Time.zone.today.all_day)
-    render json: @tasks.map { |task| { name: task.name, finished: task.finished } } 
+    render json: @tasks.map { |task| { id: task.id, name: task.name, finished: task.finished } } 
   end
 
   def create
